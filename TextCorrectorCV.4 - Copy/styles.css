@@ -1,0 +1,410 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    width: 100%;
+    overflow-x: hidden;
+    transition: background-color 0.5s, color 0.5s;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: var(--bg-color, #ffffff); /* default white if no custom color is set */
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.container.side-by-side {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+h1 {
+    margin-bottom: 24px;
+}
+
+.input-group, .output-group {
+    display: flex;
+    width: 100%;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+/*textarea {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    resize: vertical;
+    height: 100px;
+    min-height: 60px;
+}*/
+textarea {
+    width: 100%;
+    max-width: 1600px; /* Set a maximum width */
+    padding: 16px;
+    padding-right: 60px; /* Add extra padding to the right to accommodate buttons */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    resize: vertical;
+    height: 100px;
+    min-height: 90px; /* Set a minimum height */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    white-space: pre-wrap; /* Ensures text wraps as expected */
+}
+
+.container.side-by-side .input-group,
+.container.side-by-side .output-group {
+    width: 45%;
+    height: calc(100vh - 150px); /* Adjust height based on available space */
+}
+
+.send-style-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+/*.style-text {
+    width: 150px;
+    height: 35px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+    
+}*/
+#styleText {
+    width: 100%;
+    max-width: 300px; /* Set a maximum width */
+    padding: 16px;
+    padding-right: 60px; /* Add extra padding to the right to accommodate buttons */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    resize: vertical;
+    height: 100px;
+    min-height: 50px; /* Set a minimum height */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    white-space: pre-wrap; /* Ensures text wraps as expected */
+}
+
+/*.button-group {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}*/
+.button-group {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 50px; /* Adjust this value as necessary to prevent overlap */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+button {
+    padding: 16px;
+    border: none;
+    background-color: #ffffff;
+    color: gray;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button.icon-button {
+    padding: 8px;
+}
+
+button:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+button.send-button {
+    margin-bottom: 6px;
+}
+
+select {
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+.container.side-by-side select,
+.container.side-by-side button.send-button {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 50px;
+}
+
+#progressBar {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 16px;
+    display: none;
+}
+
+button.menu-button {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-size: 24px;
+}
+
+/* Side Menu */
+.side-menu {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: var(--bg-color); /* Match the background color */
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.side-menu a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: inherit; /* Inherit text color */
+    display: block;
+    transition: 0.3s;
+}
+
+.side-menu a:hover {
+    color: #f1f1f1;
+}
+
+.side-menu .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.side-menu button {
+    display: block;
+    margin: 20px 0;
+    font-size: 20px;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: gray;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.side-menu button:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.close, .close-history {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus,
+.close-history:hover,
+.close-history:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.customization-options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.color-picker, .layout-options, .font-options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    align-items: center;
+    width: 100%;
+}
+
+.color-picker label, .layout-options label, .font-options label {
+    font-size: 16px;
+    margin-right: 8px;
+    flex: 1;
+}
+
+input[type="color"], input[type="number"], select {
+    flex: 2;
+}
+
+#revisionHistory {
+    margin-top: 20px;
+}
+
+#revisionHistory h2 {
+    margin-bottom: 10px;
+}
+
+#revisionList {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#revisionList li {
+    margin-bottom: 5px;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.menu-icon {
+    font-size: 30px;
+    cursor: pointer;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+    color: inherit; /* Inherit text color */
+}
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-left: 16px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Adjust the styling for the send-group */
+.send-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+/* Apply personal design styles */
+body {
+    --bg-color: #ffffff; /* Default background color */
+    background-color: var(--bg-color);
+    color: #000000; /* Default text color */
+    font-family: Arial, sans-serif;
+    transition: background-color 0.5s, color 0.5s;
+}
+
+input[type="color"], input[type="number"], select, textarea, button {
+    transition: color 0.5s, border-color 0.5s;
+}

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Corrector</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Arial&family=Courier+New&family=Georgia&family=Times+New+Roman&family=Verdana&display=swap" rel="stylesheet">
+    
+</head>
+
+<body>
+    <div class="container stacked">
+        <h1>Text Corrector</h1>
+        <div class="input-group">
+            <textarea id="inputText" placeholder="Enter your text here"></textarea>
+            <div class="button-group">
+                <button id="pasteButton" class="icon-button"><i class="fas fa-paste"></i></button>
+                <button id="recordButton" class="icon-button"><i class="fas fa-microphone"></i></button>
+            </div>
+        </div>
+
+        <div class="send-style-group">
+            <button id="sendButton" class="send-button">Send</button>
+            <textarea id="styleText" placeholder="Style (optional)" class="style-text"></textarea>
+        </div>
+        
+        <select id="correctionLevelSpinner">
+            <option value="Corrector Only">Corrector Only</option>
+            <option value="Corrector at High Level">Corrector at High Level</option>
+            <option value="Corrector at Very High Level">Corrector at Very High Level</option>
+        </select>
+        <div class="output-group">
+            <textarea id="outputText" readonly></textarea>
+            <div class="button-group">
+                <button id="copyButton" class="icon-button"><i class="fas fa-copy"></i></button>
+                <button id="playButton" class="icon-button"><i class="fas fa-play"></i></button>
+            </div>
+        </div>
+        <div id="progressBar">Loading...</div>
+    </div>
+
+    <!-- Side Menu -->
+    <div id="sideMenu" class="side-menu">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <button id="personalDesignButton">Personal Design</button>
+        <button id="historyButton">History</button>
+    </div>
+
+    <!-- Menu Icon -->
+    <span id="openMenuButton" class="menu-icon" onclick="openNav()">&#9776;</span>
+
+    <!-- Modal for Personal Design -->
+    <div id="personalDesignModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Customize Your Site</h2>
+            <div class="customization-options">
+                <div class="font-options">
+                    <label for="fontSize">Text Size:</label>
+                    <input type="number" id="fontSize" value="16" min="10" max="35">
+                </div>
+                <div class="font-options">
+                    <label for="fontFamily">Text Font:</label>
+                    <select id="fontFamily">
+                        <option value="Arial">Arial</option>
+                        <option value="Courier New">Courier New</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Verdana">Verdana</option>
+                    </select>
+                </div>
+                <div class="color-picker">
+                    <label for="textColor">Text Color:</label>
+                    <input type="color" id="textColor" value="#000000">
+                </div>
+                <div class="color-picker">
+                    <label for="backgroundColor">Background Color:</label>
+                    <input type="color" id="backgroundColor" value="#f0f0f0">
+                </div>
+                <!--<div class="layout-options">
+                    <label for="layoutSelect">Layout:</label>
+                    <select id="layoutSelect">
+                        <option value="stacked">Normal</option>
+                        <option value="side-by-side">Side by Side</option>
+                    </select>
+                </div>-->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for History -->
+    <div id="historyModal" class="modal">
+        <div class="modal-content">
+            <span class="close-history">&times;</span>
+            <h2>History</h2>
+            <ul id="historyList"></ul>
+        </div>
+    </div>
+    <!--<div id="historyModal" class="modal">
+        <div class="modal-content">
+            <span class="close-history">&times;</span>
+            <h2>History</h2>
+            <ul id="historyList"></ul>
+            <div id="detailedHistory" style="display: none;">
+                <h3 id="detailedTitle"></h3>
+                <textarea id="detailedOutput" readonly></textarea>
+            </div>
+        </div>
+    </div>-->
+    
+
+    <script>
+        function openNav() {
+            document.getElementById("sideMenu").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("sideMenu").style.width = "0";
+        }
+
+        // Apply personal design styles
+        function applyPersonalDesign() {
+            const backgroundColor = document.getElementById("backgroundColor").value;
+            const textColor = document.getElementById("textColor").value;
+            //const layout = document.getElementById("layoutSelect").value;
+            let fontSize = document.getElementById("fontSize").value;
+            const fontFamily = document.getElementById("fontFamily").value;
+
+            if (fontSize > 35) {
+                fontSize = 35;
+                document.getElementById("fontSize").value = 35;
+            }
+
+            document.body.style.backgroundColor = backgroundColor;
+            document.body.style.color = textColor;
+            document.body.style.fontFamily = fontFamily;
+
+            const elements = document.querySelectorAll("button, select, textarea, input[type='color'], input[type='number']");
+            elements.forEach(element => {
+                element.style.color = textColor;
+                element.style.borderColor = textColor;
+                element.style.backgroundColor = backgroundColor; // Update button background color
+            });
+
+            document.querySelector('.container').className = 'container ' + layout;
+        }
+
+        document.getElementById("backgroundColor").addEventListener("input", applyPersonalDesign);
+        document.getElementById("textColor").addEventListener("input", applyPersonalDesign);
+        document.getElementById("layoutSelect").addEventListener("change", applyPersonalDesign);
+        document.getElementById("fontSize").addEventListener("input", applyPersonalDesign);
+        document.getElementById("fontFamily").addEventListener("change", applyPersonalDesign);
+
+        // Open and close side menu event listeners
+        document.getElementById("openMenuButton").addEventListener("click", openNav);
+        document.getElementById("closeMenuButton").addEventListener("click", closeNav);
+    </script>
+    <script src="scripts.js"></script>
+</body>
+
+</html>
